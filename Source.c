@@ -93,7 +93,7 @@ void main() {
 	char i = 0, j = 0;
 	char base[10][100];
 	char base1[10][100];
-	FILE *fo, *fi, *fiout, *fa, *farch;
+	FILE *fo, *fiout, *fa, *farch;
 	int cnt = 0;
 	char chIn[20], chOut[20], chArch[20];
 	int pre = EOF;
@@ -114,21 +114,12 @@ void main() {
 			printf("Enter the file name to encode:");
 			scanf("%s", &chIn);
 
-		loop2:
-			printf("Enter the file name to store the code: ");
-			scanf("%s", &chOut);
 
 			printf("\n");
 			fo = fopen(chIn, "r");
 			if (fo == NULL) {
 				printf("Error\n");
 				goto loop1;
-			}
-
-			fi = fopen(chOut, "w");
-			if (fi == NULL) {
-				printf("Error\n");
-				goto loop2;
 			}
 
 
@@ -145,13 +136,6 @@ void main() {
 				len = strlen(base[i]);
 				encode(base[i], len, pass);
 
-
-
-				for (j = 0; j < len; j++) {
-					fprintf(fi, "%d ", pass[j]);
-				}
-				fprintf(fi, "\n");
-
 				printf("%s : [", base[i]);
 				for (j = 0; j < len; j++)
 					printf("%d ", pass[j]);
@@ -159,9 +143,9 @@ void main() {
 				printf("]\n");
 
 				if (check(base[i], len, pass))
-					printf("Correct :)\n");
+					printf("Correct\n");
 				else
-					printf("Incorrect :(\n");
+					printf("Incorrect\n");
 			}
 
 
@@ -202,7 +186,7 @@ void main() {
 				break;
 
 			case 2:
-				fclose(fi);
+
 				fclose(fo);
 				exit = YES;
 				break;
