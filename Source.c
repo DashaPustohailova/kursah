@@ -143,7 +143,7 @@ void main() {
 				printf("]\n");
 
 				if (check(base[i], len, pass))
-					printf("Correct\n");
+					printf("Correct\n"); 
 				else
 					printf("Incorrect\n");
 			}
