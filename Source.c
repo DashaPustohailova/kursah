@@ -4,14 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
-
 #define NO 0
 #define YES 1
 #define MAX_SIZE 100
+
 int move_to_front(char *str, char c)
 {
 	char *q, *p;
-	char shift = 0;
+	int shift = 0;
 	p = (char *)malloc(strlen(str) + 1);
 	strcpy(p, str);
 	q = strchr(p, c);
@@ -21,6 +21,8 @@ int move_to_front(char *str, char c)
 	free(p);
 	return shift;
 }
+
+
 void name()
 {
 	char word[20], line[100];
@@ -41,11 +43,13 @@ void name()
 			i = 0;
 			printf("%s\n", word);
 		}
-	}getchar();
+	}
+	getchar();
 }
-void decode(char* pass, char size, char *sym)
+
+void decode(int* pass, int size, char *sym)
 {
-	char i, index;
+	int i, index;
 	char c;
 	char table[] = "abcdefghijklmnopqrstuvwxyz";
 	for (i = 0; i < size; i++)
@@ -58,9 +62,10 @@ void decode(char* pass, char size, char *sym)
 	sym[size] = '\0';
 }
 
-void encode(char *sym, char size, char *pass)
+
+void encode(char *sym, int size, int *pass)
 {
-	char i = 0;
+	int i = 0;
 	char c;
 	char table[] = "abcdefghijklmnopqrstuvwxyz";
 	for (i = 0; i < size; i++)
@@ -70,11 +75,12 @@ void encode(char *sym, char size, char *pass)
 	}
 }
 
-int check(char *sym, char size, char *pass)
+
+int check(char *sym, int size, int *pass)
 {
-	char *pass2 = malloc(sizeof(char)*size);
+	int *pass2 = malloc(sizeof(int)*size);
 	char *sym2 = malloc(sizeof(char)*size);
-	char i, val = 1;
+	int i, val = 1;
 
 	encode(sym, size, pass2);
 	i = 0;
@@ -88,9 +94,11 @@ int check(char *sym, char size, char *pass)
 
 	return val;
 }
-void main() {
+
+void main()
+{
 	int exit = NO;
-	char i = 0, j = 0;
+	int i = 0, j = 0;
 	char base[10][100];
 	char base1[10][100];
 	FILE *fo, *fiout, *fa, *farch;
@@ -100,6 +108,7 @@ void main() {
 	int *pass1;
 	int s;
 	int flag = 0;
+
 	do
 	{
 		system("cls");
@@ -114,14 +123,11 @@ void main() {
 			printf("Enter the file name to encode:");
 			scanf("%s", &chIn);
 
-
-			printf("\n");
 			fo = fopen(chIn, "r");
 			if (fo == NULL) {
 				printf("Error\n");
 				goto loop1;
 			}
-
 
 			while (!feof(fo)) {
 				fscanf(fo, "%s", base[i]);
@@ -129,12 +135,13 @@ void main() {
 			}
 			cnt = i;
 
-			char pass[MAX_SIZE] = { 0 };
-			char len;
+			int pass[MAX_SIZE] = { 0 };
+			int len;
 			for (i = 0; i < cnt; i++)
 			{
 				len = strlen(base[i]);
 				encode(base[i], len, pass);
+
 
 				printf("%s : [", base[i]);
 				for (j = 0; j < len; j++)
@@ -143,17 +150,17 @@ void main() {
 				printf("]\n");
 
 				if (check(base[i], len, pass))
-					printf("Correct\n"); 
+					printf("Correct :)\n");
 				else
-					printf("Incorrect\n");
+					printf("Incorrect :(\n");
 			}
-
 
 			int choice;
 		loop4:
 
 			printf("Select an action:\n 1 - add to archive\n 2 - complete work:\n");
 			scanf("%i", &choice);
+
 			switch (choice)
 			{
 			case 1:
@@ -203,9 +210,11 @@ void main() {
 			name();
 			printf("\n");
 			int *pass2;
+
 			printf("Enter file name: \n");
 			scanf("%s", &chArch);
 			printf("\n\n");
+
 			farch = fopen("archiv.txt", "r");
 			char str_[100];
 			char str1_[100];
@@ -215,6 +224,7 @@ void main() {
 			int P;
 			int ok = NO;
 			char *sym;
+
 			while (1)
 			{
 				estr = fgets(str_, sizeof(str_), farch);
@@ -244,6 +254,8 @@ void main() {
 					flag = 0;
 					printf("     %s\n", str_);
 				}
+
+
 				if ((strstr(str_, chArch) == NULL) & (flag > 0))
 				{
 					P = 0;
@@ -275,9 +287,11 @@ void main() {
 					printf("%s \n", sym);
 				}
 			}
+
 			if (ok == NO) printf("  Error. This file does not exist.\n");
 			system("pause");
 			break;
+
 		case 3:
 			exit = YES;
 			break;
